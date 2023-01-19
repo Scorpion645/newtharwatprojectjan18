@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
+import '../widgets/customTextField.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
@@ -12,7 +13,8 @@ class SignUpScreen extends StatelessWidget {
       backgroundColor: kMainColor,
       body: ListView(
         children: [
-          Stack(alignment: Alignment.center,
+          Stack(
+            alignment: Alignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(50),
@@ -26,9 +28,12 @@ class SignUpScreen extends StatelessWidget {
                           fontSize: 25,
                           fontFamily: 'pacifico'))),
             ],
-          )
+          ),
+          SizedBox(height: 20,),
+          CustomTextField()
         ],
       ),
     );
   }
 }
+

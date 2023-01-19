@@ -1,11 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:newtharwatprojectjan18/screens/login_screen.dart';
 
 import '../constants/constants.dart';
+import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
-  const SignUpScreen({Key? key}) : super(key: key);
+  String _email = '', _password = '';
+  SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +34,69 @@ class SignUpScreen extends StatelessWidget {
                           fontFamily: 'pacifico'))),
             ],
           ),
-          SizedBox(height: 20,),
-          CustomTextField()
+          SizedBox(
+            height: 20,
+          ),
+          CustomTextField(
+            myHint: 'Enter your Name',
+            myIcon: Icons.person,
+            onClick: (String) {},
+            myObscuredText: false,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CustomTextField(
+            myHint: 'Enter your Email',
+            myIcon: Icons.email,
+            onClick: (String value) {
+              _email = value;
+            },
+            myObscuredText: false,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CustomTextField(
+            myHint: 'Enter your password',
+            myIcon: Icons.lock,
+            onClick: (value) {
+              _password = value;
+            },
+            myObscuredText: true,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          CustomButton(
+            buttonTitle: 'Sign up',
+            onClick: () {
+              print(_email);
+              print(_password);
+            },
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Already have an account?',
+                  style:
+                      TextStyle(fontWeight: FontWeight.normal, fontSize: 14)),
+              TextButton(
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, LogInScreen.id);
+                  },
+                  child: Text('Log in',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black)))
+            ],
+          )
         ],
       ),
     );
   }
 }
-

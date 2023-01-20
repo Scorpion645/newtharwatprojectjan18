@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "416319243411",
+    "project_id": "newtharwat-85c52",
+    "storage_bucket": "newtharwat-85c52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416319243411:android:f64d37c0fedebd80963966",
+        "android_client_info": {
+          "package_name": "com.example.newtharwatprojectjan18"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416319243411-1l241tnb8ptq100kqklkvn3rsk9q7fan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMxJCSgx_XVMCRVobS359h6we0ALfB8Es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416319243411-1l241tnb8ptq100kqklkvn3rsk9q7fan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,14 +6,40 @@ class CustomTextField extends StatelessWidget {
   String myHint;
   IconData myIcon;
   bool myObscuredText;
-  void Function(String)? onClick;
-  CustomTextField({required this.myHint, required this.myIcon, required this.onClick, required this.myObscuredText});
+  final Function(String)? onClick;
+  CustomTextField(
+      {required this.myHint,
+      required this.myIcon,
+      required this.onClick,
+      required this.myObscuredText});
+
+  String _errorMessage(String hint) {
+    switch (myHint) {
+      case 'Enter your Name':
+        return 'Name is missing';
+      case 'Enter your Email':
+        return 'Email is missing';
+      case 'Enter your password':
+        return 'password is missing';
+
+      //   break;
+      // default:
+    }
+    return "null";
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return _errorMessage(myHint);
+          }
+          return 'Good Job';
+        },
+        
         onChanged: onClick,
         obscureText: myObscuredText,
         decoration: InputDecoration(

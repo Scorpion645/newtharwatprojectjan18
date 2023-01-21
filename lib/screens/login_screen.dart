@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
+import '../firebase_auth/Auth.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
 import 'signup_screen.dart';
@@ -65,8 +67,16 @@ class LogInScreen extends StatelessWidget {
             ),
             CustomButton(
               buttonTitle: 'Log in',
-              onClick: () {
-                _globalKey.currentState!.validate();
+              onClick: () async {
+                if (_globalKey.currentState!.validate()) {
+                  try {
+                    final authResult = await Auth().Login(_email, _password);
+                    print(authResult.user.uid);
+                  } on FirebaseException catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.message!)));
+                  }
+                }
                 print(_email);
                 print(_password);
               },

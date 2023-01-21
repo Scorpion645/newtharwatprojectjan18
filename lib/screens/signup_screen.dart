@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:newtharwatprojectjan18/screens/login_screen.dart';
 
 import '../constants/constants.dart';
+import '../firebase_auth/Auth.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
 
@@ -73,10 +75,16 @@ class SignUpScreen extends StatelessWidget {
             ),
             CustomButton(
               buttonTitle: 'Sign up',
-              onClick: () {
-                _globalKeys.currentState!.validate();
-                print(_email);
-                print(_password);
+              onClick: () async {
+                if (_globalKeys.currentState!.validate()) {
+                  try {
+                    final authResult = await Auth().Signup(_email, _password);
+                    print(authResult.user.uid);
+                  } on FirebaseException catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.message!)));
+                  }
+                }
               },
             ),
             SizedBox(

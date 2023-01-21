@@ -37,7 +37,6 @@ class CustomTextField extends StatelessWidget {
           if (value!.isEmpty) {
             return _errorMessage(myHint);
           }
-          return 'Good Job';
         },
         
         onChanged: onClick,

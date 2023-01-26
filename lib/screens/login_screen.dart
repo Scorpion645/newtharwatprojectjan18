@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
 import '../firebase_auth/Auth.dart';
+import '../provider/admin_mode.dart';
 import '../provider/modelhud.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
@@ -13,7 +14,6 @@ import 'signup_screen.dart';
 class LogInScreen extends StatelessWidget {
   static String id = 'login screen';
   String _email = '', _password = '';
-  // bool progressIndicator = false;
   LogInScreen({super.key});
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
@@ -111,6 +111,37 @@ class LogInScreen extends StatelessWidget {
                               fontSize: 16,
                               color: Colors.black)))
                 ],
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 90, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(true);
+                          // print(isAdmin);
+                        },
+                        child: Text(
+                          'I am Admin',
+                          style: TextStyle(
+                              color: Provider.of<AdminMode>(context).isAdmin ? kMainColor : Colors.white),
+                        )),
+                    TextButton(
+                      onPressed: () {
+                        Provider.of<AdminMode>(context, listen: false)
+                            .changeIsAdmin(false);
+                      },
+                      child: Text(
+                        'I am a user',
+                        style: TextStyle(
+                            color: Provider.of<AdminMode>(context).isAdmin ? Colors.white : kMainColor),
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

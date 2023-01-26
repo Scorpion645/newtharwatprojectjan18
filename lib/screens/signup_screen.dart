@@ -1,22 +1,24 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:newtharwatprojectjan18/provider/modelhud.dart';
-import 'package:newtharwatprojectjan18/screens/login_screen.dart';
+import 'package:newtharwatprojectjan18/screens/admin/admin_home.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
-import '../firebase_auth/Auth.dart';
+import '../services/Auth.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
+import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
   late String _email = '', _password = '';
   final GlobalKey<FormState> _globalKeys = GlobalKey<FormState>();
   SignUpScreen({Key? key}) : super(key: key);
+  final adminPassword = 'Admin1234';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +87,7 @@ class SignUpScreen extends StatelessWidget {
                         .changeisLoading(true);
                   if (_globalKeys.currentState!.validate()) {
                     try {
-                      final authResult = await Auth().Signup(_email, _password);
+                      final authResult = await Auth().signup(_email, _password);
                       print(authResult.user.uid);
                       Provider.of<ModelHud>(context, listen: false)
                           .changeisLoading(false);
@@ -94,6 +96,9 @@ class SignUpScreen extends StatelessWidget {
                         'Sign up successful!',
                         textAlign: TextAlign.center,
                       )));
+                      if (_password == adminPassword) {
+                        Navigator.popAndPushNamed(context, AdminScreen.id);
+                      }
                     } on FirebaseException catch (e) {
                       Provider.of<ModelHud>(context, listen: false)
                           .changeisLoading(false);

@@ -4,11 +4,12 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
-import '../firebase_auth/Auth.dart';
 import '../provider/admin_mode.dart';
 import '../provider/modelhud.dart';
+import '../services/Auth.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
+import 'admin/admin_home.dart';
 import 'signup_screen.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -154,6 +155,7 @@ class LogInScreen extends StatelessWidget {
               'Admin Login successful!',
               textAlign: TextAlign.center,
             )));
+            Navigator.popAndPushNamed(context, AdminScreen.id);
           } on FirebaseException catch (e) {
             modelHud.changeisLoading(false);
             ScaffoldMessenger.of(context)
@@ -186,3 +188,4 @@ class LogInScreen extends StatelessWidget {
     modelHud.changeisLoading(false);
   }
 }
+

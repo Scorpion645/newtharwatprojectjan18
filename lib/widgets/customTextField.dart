@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
-
 class CustomTextField extends StatelessWidget {
   String myHint;
-  IconData myIcon;
+  IconData? myIcon;
+  Color? myColor;
   bool myObscuredText;
   final Function(String)? onClick;
   CustomTextField(
       {required this.myHint,
-      required this.myIcon,
-      required this.onClick,
+      this.myIcon,
+      this.onClick,
+      this.myColor,
       required this.myObscuredText});
 
   String _errorMessage(String hint) {
@@ -38,7 +38,6 @@ class CustomTextField extends StatelessWidget {
             return _errorMessage(myHint);
           }
         },
-        
         onChanged: onClick,
         obscureText: myObscuredText,
         decoration: InputDecoration(
@@ -52,7 +51,7 @@ class CustomTextField extends StatelessWidget {
           hintText: myHint,
           hintStyle: TextStyle(color: Colors.white),
           filled: true,
-          fillColor: kSecondaryColor,
+          fillColor: myColor,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(width: 3, color: Colors.white)),

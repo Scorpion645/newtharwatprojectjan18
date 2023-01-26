@@ -89,6 +89,11 @@ class SignUpScreen extends StatelessWidget {
                       print(authResult.user.uid);
                       Provider.of<ModelHud>(context, listen: false)
                           .changeisLoading(false);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        'Sign up successful!',
+                        textAlign: TextAlign.center,
+                      )));
                     } on FirebaseException catch (e) {
                       Provider.of<ModelHud>(context, listen: false)
                           .changeisLoading(false);

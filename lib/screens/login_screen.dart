@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
 import '../firebase_auth/Auth.dart';
+import '../provider/admin_mode.dart';
 import '../provider/modelhud.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
@@ -16,6 +17,8 @@ class LogInScreen extends StatelessWidget {
   // bool progressIndicator = false;
   LogInScreen({super.key});
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  bool isAdmin = false;
+  final adminPassword = 'Admin1234';
 
   @override
   Widget build(BuildContext context) {
@@ -75,21 +78,7 @@ class LogInScreen extends StatelessWidget {
               CustomButton(
                 buttonTitle: 'Log in',
                 onClick: () async {
-                  Provider.of<ModelHud>(context, listen: false)
-                      .changeisLoading(true);
-                  if (_globalKey.currentState!.validate()) {
-                    try {
-                      final authResult = await Auth().Login(_email, _password);
-                      Provider.of<ModelHud>(context, listen: false)
-                          .changeisLoading(false);
-                      print(authResult.user.uid);
-                    } on FirebaseException catch (e) {
-                      Provider.of<ModelHud>(context, listen: false)
-                          .changeisLoading(false);
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.message!)));
-                    }
-                  }
+                  _validate(context);
                 },
               ),
               SizedBox(
@@ -98,7 +87,7 @@ class LogInScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Do not have an account?',
+                  Text('Do not have an account? ',
                       style: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 14)),
                   TextButton(
@@ -111,11 +100,89 @@ class LogInScreen extends StatelessWidget {
                               fontSize: 16,
                               color: Colors.black)))
                 ],
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 93, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Provider.of<AdminMode>(context, listen: false)
+                            .changeIsAdmin(true);
+                      },
+                      child: Text('I am an Admin',
+                          style: TextStyle(
+                              color: Provider.of<AdminMode>(context).isAdmin
+                                  ? kMainColor
+                                  : Colors.white)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Provider.of<AdminMode>(context, listen: false)
+                            .changeIsAdmin(false);
+                      },
+                      child: Text('I am a User',
+                          style: TextStyle(
+                              color: Provider.of<AdminMode>(context).isAdmin
+                                  ? Colors.white
+                                  : kMainColor)),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _validate(BuildContext context) async {
+    final modelHud = Provider.of<ModelHud>(context, listen: false);
+    modelHud.changeisLoading(true);
+    if (_globalKey.currentState!.validate()) {
+      if (Provider.of<AdminMode>(context, listen: false).isAdmin) {
+        if (_password == adminPassword) {
+          try {
+            final authResult = await Auth().Login(_email, _password);
+            modelHud.changeisLoading(false);
+            print(authResult.user.uid);
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+              'Admin Login successful!',
+              textAlign: TextAlign.center,
+            )));
+          } on FirebaseException catch (e) {
+            modelHud.changeisLoading(false);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(e.message!)));
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            'Not a recognized admin account',
+            textAlign: TextAlign.center,
+          )));
+        }
+      } else {
+        try {
+          final authResult = await Auth().Login(_email, _password);
+          modelHud.changeisLoading(false);
+          print(authResult.user.uid);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            'Login successful!',
+            textAlign: TextAlign.center,
+          )));
+        } on FirebaseException catch (e) {
+          modelHud.changeisLoading(false);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.message!)));
+        }
+      }
+    }
+    modelHud.changeisLoading(false);
   }
 }

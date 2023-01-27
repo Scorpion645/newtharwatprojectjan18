@@ -4,28 +4,27 @@ import 'package:provider/provider.dart';
 
 import 'provider/admin_mode.dart';
 import 'provider/modelhud.dart';
+import 'screens/admin/add_product.dart';
+import 'screens/admin/admin_home.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
       create: (context) {
         return ModelHud();
-      },),
-      //replace the void Main function with the current text
-      ChangeNotifierProvider(
-      create: (BuildContext context) {
-      return AdminMode();
       },
-      )
-      
-      
-    ],
-    child: MyApp()));
+    ),
+    //replace the void Main function with the current text
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return AdminMode();
+      },
+    )
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +38,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SignUpScreen.id: (context) => SignUpScreen(),
         LogInScreen.id: (context) => LogInScreen(),
+        AdminHome.id: (context) => AdminHome(),
+        AddProduct.id: (context) => AddProduct(),
       },
     );
   }

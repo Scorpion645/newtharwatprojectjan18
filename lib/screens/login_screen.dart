@@ -9,6 +9,7 @@ import '../provider/admin_mode.dart';
 import '../provider/modelhud.dart';
 import '../widgets/customButton.dart';
 import '../widgets/customTextField.dart';
+import 'admin/Admin_home.dart';
 import 'signup_screen.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -16,6 +17,7 @@ class LogInScreen extends StatelessWidget {
   String _email = '', _password = '';
   LogInScreen({super.key});
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  final _adminPassword = 'Admin1234';
 
   @override
   Widget build(BuildContext context) {
@@ -73,25 +75,74 @@ class LogInScreen extends StatelessWidget {
                 height: 79,
               ),
               CustomButton(
-                buttonTitle: 'Log in',
-                onClick: () async {
-                  Provider.of<ModelHud>(context, listen: false)
-                      .changeisLoading(true);
-                  if (_globalKey.currentState!.validate()) {
-                    try {
-                      final authResult = await Auth().Login(_email, _password);
+                  buttonTitle: 'Log in',
+                  onClick: () async {
+                    Provider.of<ModelHud>(context, listen: false)
+                        .changeisLoading(true);
+                    if (_globalKey.currentState!.validate()) {
+                      print('Validation ok');
+                      if (Provider.of<AdminMode>(context, listen: false)
+                              .isAdmin &&
+                          _password == _adminPassword) {
+                        print(
+                            'Admin button on and password equal admin passworld');
+                        try {
+                          final authResult =
+                              await Auth().Login(_email, _password);
+                          Provider.of<ModelHud>(context, listen: false)
+                              .changeisLoading(false);
+                          print(authResult.user.uid);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                            'Successful log in as Admin',
+                            textAlign: TextAlign.center,
+                          )));
+                          Navigator.popAndPushNamed(context, AdminHome.id);
+                        } on FirebaseException catch (e) {
+                          print('text2');
+                          Provider.of<ModelHud>(context, listen: false)
+                              .changeisLoading(false);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.message!)));
+                        }
+                        print('text3');
+                      } else {
+                        // print('text4');
+                        try {
+                          print('text5');
+                          final authResult =
+                              await Auth().Login(_email, _password);
+                          Provider.of<ModelHud>(context, listen: false)
+                              .changeisLoading(false);
+                          print(authResult.user.uid);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                            'Successful log in as user',
+                            textAlign: TextAlign.center,
+                          )));
+                        } on FirebaseException catch (e) {
+                          print('text2');
+                          Provider.of<ModelHud>(context, listen: false)
+                              .changeisLoading(false);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                            e.message!,
+                            textAlign: TextAlign.center,
+                          )));
+                        }
+                      }
+                    } else {
+                      print('text6');
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        'Please enter missing information',
+                        textAlign: TextAlign.center,
+                      )));
                       Provider.of<ModelHud>(context, listen: false)
                           .changeisLoading(false);
-                      print(authResult.user.uid);
-                    } on FirebaseException catch (e) {
-                      Provider.of<ModelHud>(context, listen: false)
-                          .changeisLoading(false);
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.message!)));
                     }
-                  }
-                },
-              ),
+                    // print('text7');
+                  }),
               SizedBox(
                 height: 20,
               ),
@@ -127,7 +178,9 @@ class LogInScreen extends StatelessWidget {
                         child: Text(
                           'I am Admin',
                           style: TextStyle(
-                              color: Provider.of<AdminMode>(context).isAdmin ? kMainColor : Colors.white),
+                              color: Provider.of<AdminMode>(context).isAdmin
+                                  ? kMainColor
+                                  : Colors.white),
                         )),
                     TextButton(
                       onPressed: () {
@@ -137,7 +190,9 @@ class LogInScreen extends StatelessWidget {
                       child: Text(
                         'I am a user',
                         style: TextStyle(
-                            color: Provider.of<AdminMode>(context).isAdmin ? Colors.white : kMainColor),
+                            color: Provider.of<AdminMode>(context).isAdmin
+                                ? Colors.white
+                                : kMainColor),
                       ),
                     ),
                   ],

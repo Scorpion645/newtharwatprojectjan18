@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'provider/admin_mode.dart';
 import 'provider/modelhud.dart';
+import 'screens/admin/AddProduct_screen.dart';
+import 'screens/admin/Admin_home.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
@@ -36,6 +38,8 @@ class MyApp extends StatelessWidget {
       routes: {
         SignUpScreen.id: (context) => SignUpScreen(),
         LogInScreen.id: (context) => LogInScreen(),
+        AddProductScreen.id: (context) => AddProductScreen(),
+        AdminHome.id: (context) => AdminHome(),
       },
     );
   }

@@ -101,6 +101,8 @@ class SignUpScreen extends StatelessWidget {
                           .showSnackBar(SnackBar(content: Text(e.message!)));
                     }
                   }
+                  Provider.of<ModelHud>(context, listen: false)
+                      .changeisLoading(false);
                 },
               ),
               SizedBox(

@@ -4,14 +4,17 @@ import '../constants/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   String myHint;
-  IconData myIcon;
+  IconData? myIcon;
   bool myObscuredText;
+  Color? hintColor;
   final Function(String)? onClick;
-  CustomTextField(
-      {required this.myHint,
-      required this.myIcon,
-      required this.onClick,
-      required this.myObscuredText});
+  CustomTextField({
+    required this.myHint,
+    this.myIcon,
+    this.onClick,
+    this.hintColor = Colors.white,
+    this.myObscuredText = false,
+  });
 
   String _errorMessage(String hint) {
     switch (myHint) {
@@ -38,7 +41,6 @@ class CustomTextField extends StatelessWidget {
             return _errorMessage(myHint);
           }
         },
-        
         onChanged: onClick,
         obscureText: myObscuredText,
         decoration: InputDecoration(
@@ -50,7 +52,7 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           hintText: myHint,
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: hintColor),
           filled: true,
           fillColor: kSecondaryColor,
           enabledBorder: OutlineInputBorder(

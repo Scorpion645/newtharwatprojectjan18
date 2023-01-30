@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'provider/admin_mode.dart';
 import 'provider/modelhud.dart';
+import 'screens/admin/Edit_product.dart';
 import 'screens/admin/add_product.dart';
 import 'screens/admin/admin_home.dart';
 import 'screens/login_screen.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         LogInScreen.id: (context) => LogInScreen(),
         AdminHome.id: (context) => AdminHome(),
         AddProduct.id: (context) => AddProduct(),
+        EditProduct.id: (context) =>EditProduct(),
       },
     );
   }

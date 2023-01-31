@@ -3,17 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/admin_mode.dart';
+import 'provider/modal_hud.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ChangeNotifierProvider(
-create: (BuildContext context) {
-return AdminMode();
-},
-child:MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return AdminMode();
+      },
+    ),
+    //replace the void Main function with the current text
+
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return ModalHud();
+      },
+    ),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: SignUpScreen.id,
       routes: {
-        SignUpScreen.id:(context) => SignUpScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
         LoginScreen.id: (context) => LoginScreen(),
       },
     );

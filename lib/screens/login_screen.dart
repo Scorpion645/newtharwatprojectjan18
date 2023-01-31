@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
@@ -47,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                 myOnChange: (value) {
                   _password = value;
                 },
-                myObscuredText: false,
+                myObscuredText: true,
                 myTextInputType: TextInputType.text,
               ),
               SizedBox(
@@ -56,8 +57,25 @@ class LoginScreen extends StatelessWidget {
               //  Custom button.
               CustomButton(
                 myButtonTitle: 'Log in',
-                myButtonFunction: () {
-                  _globalKey.currentState!.validate();
+                myButtonFunction: () async {
+                  if (_globalKey.currentState!.validate()) {
+                    try {
+                      final authResult = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: _email, password: _password);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Successful Login!',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                              textAlign: TextAlign.center)));
+                    } on FirebaseException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(e.message!,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                              textAlign: TextAlign.center)));
+                    }
+                  }
                 },
               ),
               //  Custom Row.

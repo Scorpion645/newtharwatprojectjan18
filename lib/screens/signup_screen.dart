@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
@@ -61,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                 myOnChange: (value) {
                   _password = value;
                 },
-                myObscuredText: false,
+                myObscuredText: true,
                 myTextInputType: TextInputType.text,
               ),
               SizedBox(
@@ -70,8 +71,22 @@ class SignUpScreen extends StatelessWidget {
               //  Custom button.
               CustomButton(
                 myButtonTitle: 'Sign up',
-                myButtonFunction: () {
-                  _globalKey.currentState!.validate();
+                myButtonFunction: () async{
+                  if (_globalKey.currentState!.validate()) {
+                    try {
+                      final authResult = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: _email, password: _password);
+                       ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text('Account created successfully!',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                              textAlign: TextAlign.center)));
+                    } on FirebaseException catch (e) {
+                       ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(e.message!,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14), textAlign: TextAlign.center,)));
+                    }
+                  }
                 },
               ),
               //  Custom Row.

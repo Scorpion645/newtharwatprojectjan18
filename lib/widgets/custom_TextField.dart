@@ -17,12 +17,30 @@ class Custom_TextField extends StatelessWidget {
     required this.myOnChange,
     required this.myIcon,
   });
+  _errorMessage(String) {
+    switch (myHint) {
+      case 'Enter your Name':
+        return 'Name is missing';
+      case 'Enter your Email':
+        return 'Email is missing';
+      case 'Enter your password':
+        return 'password is missing';
+
+        break;
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return _errorMessage(myHint);
+          }
+        },
         keyboardType: myTextInputType,
         onChanged: myOnChange,
         obscureText: myObscuredText,
@@ -43,6 +61,9 @@ class Custom_TextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: Colors.white, width: 3)),
           focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: Colors.white, width: 3)),
+          errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: Colors.white, width: 3)),
         ),

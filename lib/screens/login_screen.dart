@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
+import '../provider/admin_mode.dart';
 import '../widgets/Custom_button.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/custom_logo.dart';
@@ -12,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   static String id = 'login screen';
   late String _email, _password;
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +88,39 @@ class LoginScreen extends StatelessWidget {
                 secondTextAction: () {
                   Navigator.popAndPushNamed(context, SignUpScreen.id);
                 },
+              ),
+              // Admin row.
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 80),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(true);
+                        },
+                        child: Text('I am an Admin!',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Provider.of<AdminMode>(context)
+                                        .isAdmin
+                                    ? kMainColor
+                                    : Colors.white))),
+                    TextButton(
+                        onPressed: () {
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(false);
+                        },
+                        child: Text('I am an User!',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Provider.of<AdminMode>(context)
+                                        .isAdmin ? Colors.white : kMainColor))),
+                  ],
+                ),
               )
             ],
           ),

@@ -11,6 +11,7 @@ import 'login_screen.dart';
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
   late String _name, _email, _password;
+  final String adminPassword = 'Admin1234';
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   //  SignUpScreen({Key? key}) : super(key: key);
 
@@ -71,20 +72,25 @@ class SignUpScreen extends StatelessWidget {
               //  Custom button.
               CustomButton(
                 myButtonTitle: 'Sign up',
-                myButtonFunction: () async{
+                myButtonFunction: () async {
                   if (_globalKey.currentState!.validate()) {
                     try {
                       final authResult = await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                               email: _email, password: _password);
-                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Account created successfully!',
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Account created successfully!',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14),
                               textAlign: TextAlign.center)));
                     } on FirebaseException catch (e) {
-                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.message!,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14), textAlign: TextAlign.center,)));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        e.message!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      )));
                     }
                   }
                 },
@@ -96,7 +102,8 @@ class SignUpScreen extends StatelessWidget {
                 secondTextAction: () {
                   Navigator.popAndPushNamed(context, LoginScreen.id);
                 },
-              )
+              ),
+              
             ],
           ),
         ));

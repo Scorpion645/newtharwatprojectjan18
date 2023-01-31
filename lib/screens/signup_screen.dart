@@ -4,6 +4,7 @@ import '../constants/constants.dart';
 import '../widgets/Custom_button.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/custom_logo.dart';
+import '../widgets/custom_row.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
@@ -57,9 +58,11 @@ class SignUpScreen extends StatelessWidget {
             ),
             //  Custom button.
             CustomButton(
-              myButtonTitle: 'Log in',
+              myButtonTitle: 'Sign up',
               myButtonFunction: () {},
             ),
+            //  Custom Row.
+            CustomRow(firstText: 'Already have an account?', secondText: 'Log in', secondTextAction: () {  },)
           ],
         ));
   }

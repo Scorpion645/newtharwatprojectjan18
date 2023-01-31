@@ -14,7 +14,8 @@ class LoginScreen extends StatelessWidget {
   static String id = 'login screen';
   late String _email, _password;
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-bool isAdmin = false;
+// bool isAdmin = false;
+  String _adminPassword = 'Admin1234';
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +62,33 @@ bool isAdmin = false;
               CustomButton(
                 myButtonTitle: 'Log in',
                 myButtonFunction: () async {
-                  if (_globalKey.currentState!.validate()) {
+                  // print(AdminMode().isAdmin);
+                  if (_globalKey.currentState!.validate() &&
+                      _password == _adminPassword &&
+                      Provider.of<AdminMode>(context, listen: false).isAdmin == true) {
                     try {
                       final authResult = await FirebaseAuth.instance
                           .signInWithEmailAndPassword(
                               email: _email, password: _password);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Successful Login!',
+                          content: Text('Successful Admin Login!',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                              textAlign: TextAlign.center)));
+                    } on FirebaseException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(e.message!,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                              textAlign: TextAlign.center)));
+                    }
+                  } else {
+                    try {
+                      final authResult = await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: _email, password: _password);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Successful User Login!',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14),
                               textAlign: TextAlign.center)));
@@ -99,26 +120,29 @@ bool isAdmin = false;
                         onPressed: () {
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(true);
+                          // print(Provider.of<AdminMode>(context, listen: false).isAdmin);
                         },
                         child: Text('I am an Admin!',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
-                                color: Provider.of<AdminMode>(context)
-                                        .isAdmin
+                                color: Provider.of<AdminMode>(context).isAdmin
                                     ? kMainColor
                                     : Colors.white))),
                     TextButton(
                         onPressed: () {
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(false);
+                              // print(Provider.of<AdminMode>(context, listen: false)
+                              // .isAdmin);
                         },
                         child: Text('I am an User!',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
-                                color: Provider.of<AdminMode>(context)
-                                        .isAdmin ? Colors.white : kMainColor))),
+                                color: Provider.of<AdminMode>(context).isAdmin
+                                    ? Colors.white
+                                    : kMainColor))),
                   ],
                 ),
               )

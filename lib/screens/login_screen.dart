@@ -5,12 +5,11 @@ import '../widgets/Custom_button.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/custom_logo.dart';
 import '../widgets/custom_row.dart';
-import 'login_screen.dart';
+import 'signup_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
-  static String id = 'sign up screen';
-  late String _name, _email, _password;
-  //  SignUpScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  static String id = 'login screen';
+  late String _email, _password;
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +23,6 @@ class SignUpScreen extends StatelessWidget {
             CustomLogo(),
             SizedBox(
               height: 20,
-            ),
-            // Enter your name custom_Textfield.
-            Custom_TextField(
-              myHint: 'Enter your Name',
-              myIcon: Icons.person,
-              myOnChange: (value) {
-                _name = value;
-              },
-              myObscuredText: false,
-              myTextInputType: TextInputType.name,
-            ),
-            SizedBox(
-              height: 10,
             ),
             // Enter your e_mail custom_Textfield.
             Custom_TextField(
@@ -62,19 +48,19 @@ class SignUpScreen extends StatelessWidget {
               myTextInputType: TextInputType.text,
             ),
             SizedBox(
-              height: 10,
+              height: 79,
             ),
             //  Custom button.
             CustomButton(
-              myButtonTitle: 'Sign up',
+              myButtonTitle: 'Log in',
               myButtonFunction: () {},
             ),
             //  Custom Row.
             CustomRow(
-              firstText: 'Already have an account?',
-              secondText: 'Log in',
+              firstText: 'Do not have an account yet?',
+              secondText: 'Sign up',
               secondTextAction: () {
-                Navigator.popAndPushNamed(context, LoginScreen.id);
+                Navigator.popAndPushNamed(context, SignUpScreen.id);
               },
             )
           ],

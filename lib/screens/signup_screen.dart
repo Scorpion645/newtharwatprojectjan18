@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
+import '../widgets/Custom_button.dart';
+import '../widgets/custom_TextField.dart';
 import '../widgets/custom_logo.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -17,44 +19,49 @@ class SignUpScreen extends StatelessWidget {
               height: 40,
             ),
             CustomLogo(),
-            SizedBox(height: 20,),
-            Custom_TextField(),
+            SizedBox(
+              height: 20,
+            ),
+            // Enter your name custom_Textfield.
+            Custom_TextField(
+              myHint: 'Enter your Name',
+              myIcon: Icons.person,
+              myOnChange: (String) {},
+              myObscuredText: false,
+              myTextInputType: TextInputType.name,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // Enter your e_mail custom_Textfield.
+            Custom_TextField(
+              myHint: 'Enter your Email',
+              myIcon: Icons.mail,
+              myOnChange: (String) {},
+              myObscuredText: false,
+              myTextInputType: TextInputType.emailAddress,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // Enter your password custom_Textfield.
+            Custom_TextField(
+              myHint: 'Enter your password',
+              myIcon: Icons.lock,
+              myOnChange: (String) {},
+              myObscuredText: false,
+              myTextInputType: TextInputType.text,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            //  Custom button.
+            CustomButton(
+              myButtonTitle: 'Log in',
+              myButtonFunction: () {},
+            ),
           ],
         ));
   }
 }
 
-class Custom_TextField extends StatelessWidget {
-  const Custom_TextField({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        keyboardType: TextInputType.name,
-        onChanged: (value) {},
-        obscureText: false,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.white, width: 3)),
-          filled: true,
-          fillColor: kSecondaryColor,
-          border: InputBorder.none,
-          prefixIcon: Icon(
-            Icons.person,
-            color: Colors.black,
-          ),
-          hintText: 'Enter your Name',
-          hintStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Colors.grey[600]),
-        ),
-      ),
-    );
-  }
-}

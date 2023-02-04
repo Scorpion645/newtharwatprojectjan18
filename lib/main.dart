@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: SignUpScreen.id,
       routes: {
-        SignUpScreen.id:(context) => const SignUpScreen(),
-        LoginScreen.id: (context) => const LoginScreen(),
+        SignUpScreen.id:(context) =>  SignUpScreen(),
+        LoginScreen.id: (context) =>  LoginScreen(),
       },
     );
   }

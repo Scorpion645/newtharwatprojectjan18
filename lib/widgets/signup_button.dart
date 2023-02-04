@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class SignupButton extends StatelessWidget {
   final String buttonTitle;
-  const SignupButton({
-    super.key, required this.buttonTitle,
+  void Function()? onClick;
+  SignupButton({
+    super.key,
+    required this.buttonTitle,
+    this.onClick
   });
 
   @override
@@ -11,7 +14,7 @@ class SignupButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 120),
       child: TextButton(
-        onPressed: () {},
+        onPressed: onClick,
         child: Text(buttonTitle,
             style: TextStyle(
                 fontWeight: FontWeight.bold,

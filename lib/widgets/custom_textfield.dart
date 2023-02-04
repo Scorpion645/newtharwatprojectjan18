@@ -16,11 +16,28 @@ class CustomTextField extends StatelessWidget {
       this.myObscuredText = false,
       this.onClick});
 
+  String _errorMessage(String theHint) {
+    switch (myHint) {
+      case 'Enter your Name':
+        return 'Name is missing';
+      case 'Enter your Email':
+        return 'Email is missing';
+      case 'Enter your Password':
+        return 'Password is missing';
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value!.isEmpty) {
+            return _errorMessage(myHint);
+          }
+        },
         onChanged: onClick,
         obscureText: myObscuredText,
         keyboardType: myKeyboard,

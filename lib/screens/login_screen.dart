@@ -5,11 +5,11 @@ import '../widgets/Custom_Row.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/logo.dart';
 import '../widgets/signup_button.dart';
-import 'login_screen.dart';
+import 'signup_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
-  static String id = 'sign up screen';
-  const SignUpScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  static String id = 'Login screen';
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             Logo(),
             SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-              myHint: 'Enter your Name',
-              myIcon: Icons.person,
-              myKeyboard: TextInputType.name,
-            ),
-            SizedBox(
-              height: 10,
+              height: 80,
             ),
             CustomTextField(
               myHint: 'Enter your Email',
@@ -50,17 +42,18 @@ class SignUpScreen extends StatelessWidget {
               height: 30,
             ),
             SignupButton(
-              buttonTitle: 'Sign up',
+              buttonTitle: 'Log in',
             ),
             SizedBox(
               height: 30,
             ),
             CustomRow(
-                firstRowText: 'Already have an account?',
-                secondRowText: 'Log in',
-                onClick: () {
-                  Navigator.popAndPushNamed(context, LoginScreen.id);
-                }),
+              firstRowText: 'Do Not have an account?',
+              secondRowText: 'Sign up',
+              onClick: () {
+                Navigator.popAndPushNamed(context, SignUpScreen.id);
+              },
+            ),
           ],
         ));
   }

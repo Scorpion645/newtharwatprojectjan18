@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
@@ -53,8 +54,29 @@ class LoginScreen extends StatelessWidget {
               ),
               SignupButton(
                 buttonTitle: 'Log in',
-                onClick: () {
-                  _globalKey.currentState!.validate();
+                onClick: () async{
+                  if (_globalKey.currentState!.validate()) {
+                    try {
+                     await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: _email, password: _password);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        'Successful Login!',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      )));
+                      
+                    } on FirebaseException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                        e.message!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      )));
+                    }
+                  }
                 },
               ),
               SizedBox(

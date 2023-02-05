@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1020339190973",
+    "project_id": "tharwatauth",
+    "storage_bucket": "tharwatauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020339190973:android:58f549a909b5870a37cbd4",
+        "android_client_info": {
+          "package_name": "com.example.newtharwatprojectjan18"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020339190973-md4hhtlvemthkkrdjojlmm3k7j3hch4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEJv1zmNqZ1hYYWOfI3UmSmHjH66YtXDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020339190973-md4hhtlvemthkkrdjojlmm3k7j3hch4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

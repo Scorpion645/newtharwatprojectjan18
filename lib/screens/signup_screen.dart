@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
+import '../provider/modalHud.dart';
 import '../widgets/Custom_Row.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/logo.dart';
@@ -65,6 +67,8 @@ class SignUpScreen extends StatelessWidget {
               SignupButton(
                 buttonTitle: 'Sign up',
                 onClick: () async{
+                  Provider.of<ModalHud>(context, listen: false)
+                      .changeisLoading(true);
                   if (_globalKey.currentState!.validate()) {
                     try {
                       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -76,8 +80,12 @@ class SignUpScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 14),
                         textAlign: TextAlign.center,
                       )));
+                      Provider.of<ModalHud>(context, listen: false)
+                          .changeisLoading(false);
                       Navigator.pushNamed(context, LoginScreen.id);
                     } on FirebaseException catch (e) {
+                      Provider.of<ModalHud>(context, listen: false)
+                          .changeisLoading(false);
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                         e.message!,

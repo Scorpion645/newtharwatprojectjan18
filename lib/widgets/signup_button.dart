@@ -15,11 +15,14 @@ class SignupButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 120),
       child: TextButton(
         onPressed: onClick,
-        child: Text(buttonTitle,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.white)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(buttonTitle,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white)),
+        ),
         style: ButtonStyle(
             padding:
                 MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 15)),

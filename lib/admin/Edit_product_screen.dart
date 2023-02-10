@@ -35,8 +35,21 @@ class EditProductScreen extends StatelessWidget {
                           context: context,
                           position: RelativeRect.fromLTRB(dx, dy, dx2, dy2),
                           items: [
-                            PopupMenuItem(child: Text('Edit')),
-                            PopupMenuItem(child: Text('Delete')),
+                            PopupMenuItem(
+                                child: TextButton(
+                                    onPressed: () {
+                                      print('Working');
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Edit'))),
+                            PopupMenuItem(
+                              child: TextButton(
+                                onPressed: () {
+                                  print('Working');
+                                },
+                                child: Text('Delete'),
+                              ),
+                            )
                           ]);
                     },
                     child: Stack(children: [

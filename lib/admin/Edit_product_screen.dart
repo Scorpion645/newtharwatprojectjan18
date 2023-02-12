@@ -9,12 +9,13 @@ import 'Manage_product_screen.dart';
 class EditProductScreen extends StatelessWidget {
   static String id = 'Edit product';
 // const EditProductScreen ({Key? key}) : super(key: key);
-  late String _name, _price, _description, _category, _image, _id;
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    dynamic product = ModalRoute.of(context)?.settings.arguments;
+    dynamic? product = ModalRoute.of(context)?.settings.arguments;
+    late String _name, _price, _description, _category, _image, _id;
+
     return Scaffold(
       backgroundColor: kMainColor,
       body: Form(
@@ -25,8 +26,9 @@ class EditProductScreen extends StatelessWidget {
               height: 80,
             ),
             CustomTextField(
-              myHint: 'Add product name',
+              myHint: '${product[1]['NAME'].toString()}',
               onClick: (value) {
+                // print('${product[0].toString()}');
                 _name = value;
               },
             ),
@@ -34,7 +36,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product price',
+              myHint: '${product[0]['PRICE'].toString()}',
               onClick: (value) {
                 _price = value;
               },
@@ -43,16 +45,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product ID',
-              onClick: (value) {
-                _id = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-              myHint: 'Add product description',
+              myHint: '${product[0]['DESCRIPTION'].toString()}',
               onClick: (value) {
                 _description = value;
               },
@@ -61,7 +54,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product category',
+              myHint: '${product[0]['CATEGORY'].toString()}',
               onClick: (value) {
                 _category = value;
               },
@@ -70,7 +63,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product image',
+              myHint: '${product[0]['IMAGE'].toString()}',
               onClick: (value) {
                 _image = value;
               },
@@ -81,6 +74,7 @@ class EditProductScreen extends StatelessWidget {
             SignupButton(
               buttonTitle: 'Add Product',
               onClick: () {
+                print(product[0]['NAME']);
                 if (_globalKey.currentState!.validate()) {
                   FirebaseFirestore.instance
                       .collection('Hello')

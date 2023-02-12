@@ -30,7 +30,7 @@ class ManageProductScreen extends StatelessWidget {
                     mainAxisSpacing: 10),
                 itemCount: products.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print(products[index]);
+                  // print('the product is'+ '${products[index]}');
                   return GestureDetector(
                     onTapUp: (details) {
                       double dx = details.globalPosition.dx;
@@ -46,7 +46,7 @@ class ManageProductScreen extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.pushNamed(
                                           context, EditProductScreen.id,
-                                          arguments: snapshot.data.docs[index].id);
+                                          arguments: snapshot.data.docs);
                                     },
                                     child: Text('Edit'))),
                             PopupMenuItem(

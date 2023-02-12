@@ -1,99 +1,105 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
+import '../widgets/custom_TextField.dart';
+import '../widgets/signup_button.dart';
+import 'Manage_product_screen.dart';
+
 class EditProductScreen extends StatelessWidget {
-  static String id = 'Edit product screen';
-  const EditProductScreen({Key? key}) : super(key: key);
+  static String id = 'Edit product';
+// const EditProductScreen ({Key? key}) : super(key: key);
+  late String _name, _price, _description, _category, _image, _id;
+  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    dynamic product = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
-      body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Hello').snapshots(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            List products = [];
-            if (snapshot.hasData) {
-              for (var doc in snapshot.data.docs) {
-                products.add(doc.data());
-              }
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  print(products[index]);
-                  return GestureDetector(
-                    onTapUp: (details) {
-                      double dx = details.globalPosition.dx;
-                      double dy = details.globalPosition.dy;
-                      double dx2 = MediaQuery.of(context).size.width - dx;
-                      double dy2 = MediaQuery.of(context).size.height - dy;
-                      showMenu(
-                          context: context,
-                          position: RelativeRect.fromLTRB(dx, dy, dx2, dy2),
-                          items: [
-                            PopupMenuItem(
-                                child: TextButton(
-                                    onPressed: () {
-                                      print('Working');
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Edit'))),
-                            PopupMenuItem(
-                              child: TextButton(
-                                onPressed: () {
-                                  print('Working');
-                                },
-                                child: Text('Delete'),
-                              ),
-                            )
-                          ]);
-                    },
-                    child: Stack(children: [
-                      Positioned.fill(
-                          child: Image.asset(
-                        '${products[index]['IMAGE']}',
-                        fit: BoxFit.cover,
-                      )),
-                      Positioned(
-                        bottom: 0,
-                        child: Opacity(
-                          opacity: 0.6,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 60,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(products[index]['NAME'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
-                                  Text('\$ ${products[index]['PRICE']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ]),
-                  );
-                },
-              );
-            } else {
-              return Center(child: Text('Loading...'));
-            }
-          }),
+      backgroundColor: kMainColor,
+      body: Form(
+        key: _globalKey,
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 80,
+            ),
+            CustomTextField(
+              myHint: 'Add product name',
+              onClick: (value) {
+                _name = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product price',
+              onClick: (value) {
+                _price = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product ID',
+              onClick: (value) {
+                _id = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product description',
+              onClick: (value) {
+                _description = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product category',
+              onClick: (value) {
+                _category = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product image',
+              onClick: (value) {
+                _image = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SignupButton(
+              buttonTitle: 'Add Product',
+              onClick: () {
+                if (_globalKey.currentState!.validate()) {
+                  FirebaseFirestore.instance
+                      .collection('Hello')
+                      .doc(product)
+                      .update({
+                    'NAME': _name,
+                    'PRICE': _price,
+                    'CATEGORY': _category,
+                    'DESCRIPTION': _description,
+                    'IMAGE': _image,
+                  });
+                }
+                ;
+                Navigator.pushNamed(context, ManageProductScreen.id);
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

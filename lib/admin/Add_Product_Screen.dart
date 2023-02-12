@@ -7,7 +7,7 @@ import '../widgets/signup_button.dart';
 
 class AddProductScreen extends StatelessWidget {
   static String id = 'add product screen';
-  late String _name, _price, _description, _category, _image;
+  late String _name, _price, _description, _category, _image, _id;
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
@@ -34,6 +34,15 @@ class AddProductScreen extends StatelessWidget {
               myHint: 'Add product price',
               onClick: (value) {
                 _price = value;
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+              myHint: 'Add product ID',
+              onClick: (value) {
+                _id = value;
               },
             ),
             SizedBox(

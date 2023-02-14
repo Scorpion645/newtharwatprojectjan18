@@ -39,15 +39,15 @@ class AddProductScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomTextField(
-              myHint: 'Add product ID',
-              onClick: (value) {
-                _id = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // CustomTextField(
+            //   myHint: 'Add product ID',
+            //   onClick: (value) {
+            //     _id = value;
+            //   },
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             CustomTextField(
               myHint: 'Add product description',
               onClick: (value) {
@@ -76,19 +76,20 @@ class AddProductScreen extends StatelessWidget {
               height: 20,
             ),
             SignupButton(
-              buttonTitle: 'Add Product',
-              onClick: () {
-                if (_globalKey.currentState!.validate()) {
-                  FirebaseFirestore.instance.collection('Hellos').add({
-                  'NAME': _name,
-                  'PRICE':_price,
-                  'DESCRIPTION':_description,
-                  'CATEGORY':_description,
-                  'IMAGE': _image,
-                }
-                );
-              
-                }})
+                buttonTitle: 'Add Product',
+                onClick: () {
+                  if (_globalKey.currentState!.validate()) {
+                    FirebaseFirestore.instance.collection('Jackets').add({
+                      'NAME': _name,
+                      'PRICE': _price,
+                      'DESCRIPTION': _description,
+                      'CATEGORY': _description,
+                      'IMAGE': _image,
+                    });
+                  } else {
+                    print('Error happened');
+                  }
+                })
           ],
         ),
       ),

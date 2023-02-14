@@ -15,8 +15,9 @@ class ManageProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Hello').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Jackets').snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
+            List productToEdit = [];
             List products = [];
             if (snapshot.hasData) {
               for (var doc in snapshot.data.docs) {
@@ -44,16 +45,23 @@ class ManageProductScreen extends StatelessWidget {
                             PopupMenuItem(
                                 child: TextButton(
                                     onPressed: () {
+                                      print(productToEdit);
+                                      productToEdit.add(snapshot.data.docs[index]);
+                                      print(productToEdit);
+
+                                      print('selected product to edit is' +
+                                          '${productToEdit[0]['NAME']}');
+                                      // print(productToEdit);
                                       Navigator.pushNamed(
                                           context, EditProductScreen.id,
-                                          arguments: snapshot.data.docs);
+                                          arguments: productToEdit);
                                     },
                                     child: Text('Edit'))),
                             PopupMenuItem(
                               child: TextButton(
                                 onPressed: () async {
                                   await FirebaseFirestore.instance
-                                      .collection('Hello')
+                                      .collection('Jackets')
                                       .doc(snapshot.data.docs[index].id)
                                       .delete();
                                   Navigator.pop(context);

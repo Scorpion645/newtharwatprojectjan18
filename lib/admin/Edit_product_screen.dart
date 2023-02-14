@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/signup_button.dart';
-import 'Manage_product_screen.dart';
 
 class EditProductScreen extends StatelessWidget {
   static String id = 'Edit product';
@@ -13,8 +11,8 @@ class EditProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic? product = ModalRoute.of(context)?.settings.arguments;
-    late String _name, _price, _description, _category, _image, _id;
+    Object? product = ModalRoute.of(context)?.settings.arguments;
+    late String _name, _price, _description, _category, _image;
 
     return Scaffold(
       backgroundColor: kMainColor,
@@ -26,7 +24,7 @@ class EditProductScreen extends StatelessWidget {
               height: 80,
             ),
             CustomTextField(
-              myHint: '${product[1]['NAME'].toString()}',
+              myHint: '${product.toString()}',
               onClick: (value) {
                 // print('${product[0].toString()}');
                 _name = value;
@@ -36,7 +34,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: '${product[0]['PRICE'].toString()}',
+              myHint: '${product.toString()}',
               onClick: (value) {
                 _price = value;
               },
@@ -45,7 +43,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: '${product[0]['DESCRIPTION'].toString()}',
+              myHint: '${product.toString()}',
               onClick: (value) {
                 _description = value;
               },
@@ -54,7 +52,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: '${product[0]['CATEGORY'].toString()}',
+              myHint: '${product.toString()}',
               onClick: (value) {
                 _category = value;
               },
@@ -63,7 +61,7 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             CustomTextField(
-              myHint: '${product[0]['IMAGE'].toString()}',
+              myHint: '${product.toString()}',
               onClick: (value) {
                 _image = value;
               },
@@ -72,23 +70,25 @@ class EditProductScreen extends StatelessWidget {
               height: 20,
             ),
             SignupButton(
-              buttonTitle: 'Add Product',
+              buttonTitle: 'ُEdit Product',
               onClick: () {
-                print(product[0]['NAME']);
-                if (_globalKey.currentState!.validate()) {
-                  FirebaseFirestore.instance
-                      .collection('Hello')
-                      .doc(product)
-                      .update({
-                    'NAME': _name,
-                    'PRICE': _price,
-                    'CATEGORY': _category,
-                    'DESCRIPTION': _description,
-                    'IMAGE': _image,
-                  });
-                }
-                ;
-                Navigator.pushNamed(context, ManageProductScreen.id);
+                print(product);
+                print(product);
+                // if (_globalKey.currentState!.validate()) {
+                //   FirebaseFirestore.instance
+                //       .collection('Jackets')
+                //       .doc(product.toString())
+                //       .update({
+                //     'NAME': _name,
+                //     'PRICE': _price,
+                //     'CATEGORY': _category,
+                //     'DESCRIPTION': _description,
+                //     'IMAGE': _image,
+                //   });
+                // } else {
+                //   print('error happened');
+                // }
+                // Navigator.pushNamed(context, ManageProductScreen.id);
               },
             )
           ],

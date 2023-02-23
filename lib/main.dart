@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/signup_screen.dart';
+import 'screens/Signup_screen.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SignUpScreen.id,
+      initialRoute: LoginScreen.id,
       routes: {
-        SignUpScreen.id:(context) => const SignUpScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        SignupScreen.id: (context) => SignupScreen(),
       },
     );
   }

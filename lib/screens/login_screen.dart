@@ -4,17 +4,15 @@ import '../constants/constants.dart';
 import '../widgets/custom_Button.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/custom_row.dart';
-import 'login_screen.dart';
+import 'Signup_screen.dart';
 
-class SignupScreen extends StatelessWidget {
-  static String id = 'Signup screen';
-  late String _email, _password, _name;
+class LoginScreen extends StatelessWidget {
+  static String id = 'sign up screen';
   GlobalKey<FormState> _globalKey = GlobalKey();
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-      
-
     return Scaffold(
       backgroundColor: kMainColor,
       body: Form(
@@ -49,34 +47,15 @@ class SignupScreen extends StatelessWidget {
               height: 20,
             ),
             Custom_TextField(
-                myHint: 'Enter your name',
-                myIcon: Icons.email,
-                onClick: (value) {
-                  // if (_globalKey.currentState!.validate()) {
-                  //   _name = value!;
-                  //   print('Good Job!');
-                  // }
-                  // print('Data is missing');
-                }),
-            SizedBox(
-              height: 20,
-            ),
-            Custom_TextField(
               myHint: 'Enter your Email',
-              myIcon: Icons.lock,
-              onClick: (value) {
-                _email = value!;
-              },
+              myIcon: Icons.email,
             ),
             SizedBox(
               height: 20,
             ),
             Custom_TextField(
-              myHint: 'Confirm your password',
+              myHint: 'Enter your password',
               myIcon: Icons.lock,
-              onClick: (value) {
-                _password = value!;
-              },
             ),
             SizedBox(
               height: 20,
@@ -85,17 +64,14 @@ class SignupScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 140),
               child: Custom_Button(
                 myButText: 'Log in',
-                onClick: () {
-                    _globalKey.currentState!.save();
-                  
-                },
+                onClick: () {},
               ),
             ),
             Custom_Row(
-              firstText: 'Already have an account?',
-              secondText: 'Log in',
+              firstText: 'Do NOT have an account yet?',
+              secondText: 'Sign up',
               onClick: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushNamed(context, SignupScreen.id);
               },
             )
           ],

@@ -15,7 +15,7 @@ class ManageProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('Hello').snapshots(),
+          stream: FirebaseFirestore.instance.collection('Jackets').snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             List products = [];
             if (snapshot.hasData) {
@@ -30,7 +30,7 @@ class ManageProductScreen extends StatelessWidget {
                     mainAxisSpacing: 10),
                 itemCount: products.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print(products[index]);
+                  // print('the product is'+ '${products[index]}');
                   return GestureDetector(
                     onTapUp: (details) {
                       double dx = details.globalPosition.dx;
@@ -44,16 +44,17 @@ class ManageProductScreen extends StatelessWidget {
                             PopupMenuItem(
                                 child: TextButton(
                                     onPressed: () {
+                                      Navigator.pop(context);
                                       Navigator.pushNamed(
                                           context, EditProductScreen.id,
-                                          arguments: snapshot.data.docs[index].id);
+                                          arguments: snapshot.data.docs[index]);
                                     },
                                     child: Text('Edit'))),
                             PopupMenuItem(
                               child: TextButton(
                                 onPressed: () async {
                                   await FirebaseFirestore.instance
-                                      .collection('Hello')
+                                      .collection('Jackets')
                                       .doc(snapshot.data.docs[index].id)
                                       .delete();
                                   Navigator.pop(context);
@@ -63,41 +64,44 @@ class ManageProductScreen extends StatelessWidget {
                             )
                           ]);
                     },
-                    child: Stack(children: [
-                      Positioned.fill(
-                          child: Image.asset(
-                        '${products[index]['IMAGE']}',
-                        fit: BoxFit.cover,
-                      )),
-                      Positioned(
-                        bottom: 0,
-                        child: Opacity(
-                          opacity: 0.6,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 60,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(products[index]['NAME'],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
-                                  Text('\$ ${products[index]['PRICE']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
-                                ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Stack(children: [
+                        Positioned.fill(
+                            child: Image.asset(
+                          '${products[index]['IMAGE']}',
+                          fit: BoxFit.cover,
+                        )),
+                        Positioned(
+                          bottom: 0,
+                          child: Opacity(
+                            opacity: 0.6,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 60,
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(products[index]['NAME'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14)),
+                                    Text('\$ ${products[index]['PRICE']}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14)),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    ]),
+                        )
+                      ]),
+                    ),
                   );
                 },
               );

@@ -35,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
                 myIcon: Icons.person,
                 myKeyboard: TextInputType.name,
                 onClick: (value) {
-                  _name = value;
+                  _name = value!;
                 },
               ),
               SizedBox(
@@ -46,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                 myIcon: Icons.email,
                 myKeyboard: TextInputType.emailAddress,
                 onClick: (value) {
-                  _email = value;
+                  _email = value!;
                 },
               ),
               SizedBox(
@@ -58,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                 myKeyboard: TextInputType.visiblePassword,
                 myObscuredText: true,
                 onClick: (value) {
-                  _password = value;
+                  _password = value!;
                 },
               ),
               SizedBox(

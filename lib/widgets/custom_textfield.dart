@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String myHint;
+  final String? myHint;
+  final String? myInitVal;
   final IconData? myIcon;
   bool myObscuredText;
   final TextInputType? myKeyboard;
-  final Function(String)? onClick;
+  final void Function(String?)? onClick;
 
   CustomTextField(
-      {required this.myHint,
+      { this.myHint,
+      this.myInitVal,
       this.myIcon,
       this.myKeyboard,
       this.myObscuredText = false,
@@ -33,12 +35,13 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: TextFormField(
+        initialValue: myInitVal,
         validator: (value) {
           if (value!.isEmpty) {
-            return _errorMessage(myHint);
+            return _errorMessage(myHint!);
           }
         },
-        onChanged: onClick,
+        onSaved: onClick,
         obscureText: myObscuredText,
         keyboardType: myKeyboard,
         decoration: InputDecoration(

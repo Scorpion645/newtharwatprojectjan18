@@ -24,7 +24,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product name',
               onClick: (value) {
-                _name = value;
+                _name = value!;
               },
             ),
             SizedBox(
@@ -33,7 +33,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product price',
               onClick: (value) {
-                _price = value;
+                _price = value!;
               },
             ),
             SizedBox(
@@ -42,7 +42,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product ID',
               onClick: (value) {
-                _id = value;
+                _id = value!;
               },
             ),
             SizedBox(
@@ -51,7 +51,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product description',
               onClick: (value) {
-                _description = value;
+                _description = value!;
               },
             ),
             SizedBox(
@@ -60,7 +60,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product category',
               onClick: (value) {
-                _category = value;
+                _category = value!;
               },
             ),
             SizedBox(
@@ -69,7 +69,7 @@ class AddProductScreen extends StatelessWidget {
             CustomTextField(
               myHint: 'Add product image',
               onClick: (value) {
-                _image = value;
+                _image = value!;
               },
             ),
             SizedBox(

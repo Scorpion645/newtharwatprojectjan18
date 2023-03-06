@@ -8,6 +8,7 @@ import 'admin/Manage_product_screen.dart';
 import 'admin/main_admin_screen.dart';
 import 'provider/iAmAdmin.dart';
 import 'provider/modalHud.dart';
+import 'screens/home_page_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
@@ -35,14 +36,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: ManageProductScreen.id,
+      initialRoute: HomePage.id,
       routes: {
         SignUpScreen.id: (context) => SignUpScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainAdminScreen.id: (context) => MainAdminScreen(),
         AddProductScreen.id: (context) => AddProductScreen(),
         ManageProductScreen.id: (context) => ManageProductScreen(),
-         EditProductScreen.id: (context) => EditProductScreen(),
+        EditProductScreen.id: (context) => EditProductScreen(),
+        HomePage.id: (context) => HomePage(),
       },
     );
   }

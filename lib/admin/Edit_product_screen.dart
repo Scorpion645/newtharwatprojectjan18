@@ -9,7 +9,7 @@ import 'Manage_product_screen.dart';
 class EditProductScreen extends StatelessWidget {
   static String id = 'Edit product';
 // const EditProductScreen ({Key? key}) : super(key: key);
-  late String _name, _price, _description, _category, _image, _id;
+  late String _name, _price, _description, _category, _image;
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
@@ -25,67 +25,56 @@ class EditProductScreen extends StatelessWidget {
               height: 80,
             ),
             CustomTextField(
-              myHint: 'Add product name',
+              myInitVal: product['NAME'].toString(),
               onClick: (value) {
-                _name = value;
+                _name = value!;
               },
             ),
             SizedBox(
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product price',
+              myInitVal: product['PRICE'].toString(),
               onClick: (value) {
-                _price = value;
+                _price = value!;
               },
             ),
             SizedBox(
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product ID',
+              myInitVal: product['DESCRIPTION'].toString(),
               onClick: (value) {
-                _id = value;
+                _description = value!;
               },
             ),
             SizedBox(
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product description',
+              myInitVal: product['CATEGORY'].toString(),
               onClick: (value) {
-                _description = value;
+                _category = value!;
               },
             ),
             SizedBox(
               height: 20,
             ),
             CustomTextField(
-              myHint: 'Add product category',
+              myInitVal: product['IMAGE'].toString(),
               onClick: (value) {
-                _category = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            CustomTextField(
-              myHint: 'Add product image',
-              onClick: (value) {
-                _image = value;
+                _image = value!;
               },
             ),
             SizedBox(
               height: 20,
             ),
             SignupButton(
-              buttonTitle: 'Add Product',
+              buttonTitle: 'Edit Product',
               onClick: () {
                 if (_globalKey.currentState!.validate()) {
-                  FirebaseFirestore.instance
-                      .collection('Hello')
-                      .doc(product)
-                      .update({
+                  _globalKey.currentState!.save();
+                  FirebaseFirestore.instance.collection('Jackets').doc(product.toString()).update({
                     'NAME': _name,
                     'PRICE': _price,
                     'CATEGORY': _category,

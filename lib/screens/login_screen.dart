@@ -11,6 +11,7 @@ import '../widgets/Custom_Row.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/logo.dart';
 import '../widgets/signup_button.dart';
+import 'Home_page_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -43,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                   myIcon: Icons.email,
                   myKeyboard: TextInputType.emailAddress,
                   onClick: (value) {
-                    _email = value;
+                    _email = value!;
                   },
                 ),
                 SizedBox(
@@ -55,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                   myKeyboard: TextInputType.visiblePassword,
                   myObscuredText: true,
                   onClick: (value) {
-                    _password = value;
+                    _password = value!;
                   },
                 ),
                 SizedBox(
@@ -64,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                 SignupButton(
                   buttonTitle: 'Log in',
                   onClick: () async {
+                    _globalKey.currentState!.save();
                     Provider.of<ModalHud>(context, listen: false)
                         .changeisLoading(true);
                     if (_globalKey.currentState!.validate()) {
@@ -79,13 +81,15 @@ class LoginScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 14),
                           textAlign: TextAlign.center,
                         )));
-                         Provider.of<ModalHud>(context, listen: false)
+                        Provider.of<ModalHud>(context, listen: false)
                             .changeisLoading(false);
                         if (_password == _adminPassword) {
                           Navigator.pushNamed(context, MainAdminScreen.id);
+                        } else {
+                          Navigator.pushNamed(context, HomePage.id);
                         }
                       } on FirebaseException catch (e) {
-                         Provider.of<ModalHud>(context, listen: false)
+                        Provider.of<ModalHud>(context, listen: false)
                             .changeisLoading(false);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(

@@ -2,15 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'admin/Add_Product_Screen.dart';
-import 'admin/Edit_product_Screen.dart';
-import 'admin/Manage_product_screen.dart';
-import 'admin/main_admin_screen.dart';
 import 'provider/iAmAdmin.dart';
 import 'provider/modalHud.dart';
-import 'screens/home_page_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/signup_screen.dart';
+import 'screens/admin/Add_Product_Screen.dart';
+import 'screens/admin/Edit_product_screen.dart';
+import 'screens/admin/Manage_product_screen.dart';
+import 'screens/admin/main_admin_screen.dart';
+import 'screens/user/Home_page_screen.dart';
+import 'screens/user/login_screen.dart';
+import 'screens/user/signup_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

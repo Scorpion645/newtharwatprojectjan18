@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
-import '../widgets/product_view.dart';
+import '../../constants/constants.dart';
+import '../../widgets/product_view.dart';
 
 class HomePage extends StatefulWidget {
   static String id = 'Home page';

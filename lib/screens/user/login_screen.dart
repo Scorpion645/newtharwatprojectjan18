@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/constants.dart';
+import '../../provider/iAmAdmin.dart';
+import '../../provider/modalHud.dart';
+import '../../widgets/Custom_Row.dart';
+import '../../widgets/custom_TextField.dart';
+import '../../widgets/logo.dart';
+import '../../widgets/signup_button.dart';
 import '../admin/main_admin_screen.dart';
-import '../constants/constants.dart';
-import '../provider/iAmAdmin.dart';
-import '../provider/modalHud.dart';
-import '../widgets/Custom_Row.dart';
-import '../widgets/custom_TextField.dart';
-import '../widgets/logo.dart';
-import '../widgets/signup_button.dart';
 import 'Home_page_screen.dart';
 import 'signup_screen.dart';
 

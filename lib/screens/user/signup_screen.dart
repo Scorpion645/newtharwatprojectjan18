@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../constants/constants.dart';
-import '../provider/modalHud.dart';
-import '../widgets/Custom_Row.dart';
-import '../widgets/custom_TextField.dart';
-import '../widgets/logo.dart';
-import '../widgets/signup_button.dart';
+import '../../constants/constants.dart';
+import '../../provider/modalHud.dart';
+import '../../widgets/Custom_Row.dart';
+import '../../widgets/custom_TextField.dart';
+import '../../widgets/logo.dart';
+import '../../widgets/signup_button.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {

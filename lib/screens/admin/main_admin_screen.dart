@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
-import '../widgets/signup_button.dart';
+import '../../constants/constants.dart';
+import '../../widgets/signup_button.dart';
 import 'Add_Product_Screen.dart';
 import 'Manage_product_screen.dart';
 

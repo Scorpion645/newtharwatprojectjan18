@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class CustomRow extends StatelessWidget {
   final String firstText;
   final String secText;
-  const CustomRow({Key? key, required this.firstText, required this.secText})
+  final Function()? onClick;
+  const CustomRow({Key? key, required this.firstText, required this.secText, required this.onClick})
       : super(key: key);
 
   @override
@@ -13,7 +14,7 @@ class CustomRow extends StatelessWidget {
       children: [
         Text(firstText),
         TextButton(
-            onPressed: () {},
+            onPressed: onClick,
             child: Text(secText,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,

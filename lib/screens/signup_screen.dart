@@ -5,6 +5,7 @@ import '../widgets/Custom_row.dart';
 import '../widgets/custom_Button.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/logo.dart';
+import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
@@ -26,7 +27,9 @@ class SignUpScreen extends StatelessWidget {
         SizedBox(height: 20,),
         CustomButton(butTitle: 'Sign up'),
         SizedBox(height: 10,),
-        CustomRow(firstText: 'Already have an accunt?',secText: 'Log in'),
+        CustomRow(firstText: 'Already have an accunt?',secText: 'Log in',onClick: (() {
+          Navigator.pushNamed(context, LoginScreen.id);
+        })),
       ]),
     );
   }

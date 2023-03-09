@@ -5,10 +5,11 @@ import '../constants/constants.dart';
 class CustomTextField extends StatelessWidget {
   final String? myHint;
   final IconData? myIcon;
-  CustomTextField({Key? key, this.myHint, this.myIcon}) : super(key: key);
+  void Function(String?)? onClick;
+  CustomTextField({Key? key, this.myHint, this.myIcon, required this.onClick}) : super(key: key);
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
-  String _errorMessage() {
+  String _errorMessage(String) {
     switch (myHint) {
       case 'Enter your Name':
         return 'Please enter your Name';
@@ -25,11 +26,12 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: TextFormField(
+        onSaved: onClick,
         validator: (value) {
           if (value!.isEmpty) {
-            return _errorMessage();
-          } else
-            return 'good Job';
+            return _errorMessage(myHint);
+          } 
+            // return '';
         },
         decoration: InputDecoration(
           constraints: BoxConstraints(maxHeight: 80),

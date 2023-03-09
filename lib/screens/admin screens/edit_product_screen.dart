@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 import '../../widgets/custom_Button.dart';
 import '../../widgets/custom_TextField.dart';
+import 'manage_products_screen.dart';
 
 class EditProductScreen extends StatelessWidget {
   static String id = 'Edit product screen';
-  late String _name, _price, _description, _category, _image;
+
   EditProductScreen({Key? key}) : super(key: key);
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    dynamic product = ModalRoute.of(context)?.settings.arguments;
+    late String _name, _price, _description, _category, _image;
     return Scaffold(
       backgroundColor: kMainColor,
       body: Form(
@@ -26,7 +29,7 @@ class EditProductScreen extends StatelessWidget {
               onClick: (value) {
                 _name = value!;
               },
-              myHint: 'Edit product name',
+              myInitVal: product['NAME'].toString(),
             ),
             SizedBox(
               height: 20,
@@ -35,7 +38,7 @@ class EditProductScreen extends StatelessWidget {
               onClick: (value) {
                 _price = value!;
               },
-              myHint: 'Edit product price',
+              myInitVal: product['PRICE'].toString(),
             ),
             SizedBox(
               height: 20,
@@ -44,7 +47,7 @@ class EditProductScreen extends StatelessWidget {
               onClick: (value) {
                 _category = value!;
               },
-              myHint: 'Edit product category',
+              myInitVal: product['CATEGORY'].toString(),
             ),
             SizedBox(
               height: 20,
@@ -53,7 +56,7 @@ class EditProductScreen extends StatelessWidget {
               onClick: (value) {
                 _description = value!;
               },
-              myHint: 'Edit product description',
+              myInitVal: product['DESCRIPTION'].toString(),
             ),
             SizedBox(
               height: 20,
@@ -62,7 +65,7 @@ class EditProductScreen extends StatelessWidget {
               onClick: (value) {
                 _image = value!;
               },
-              myHint: 'Edit product image',
+              myInitVal: product['IMAGE'].toString(),
             ),
             SizedBox(
               height: 40,
@@ -72,13 +75,17 @@ class EditProductScreen extends StatelessWidget {
               onClick: () async {
                 _globalKey.currentState!.save();
                 if (_globalKey.currentState!.validate()) {
-                  await FirebaseFirestore.instance.collection('Hello').add({
+                  print(product.toString());
+                  await FirebaseFirestore.instance
+                      .collection('Hello')
+                      .doc(product.id.toString()).update({
                     'NAME': _name,
                     'PRICE': _price,
                     'DESCRIPTION': _description,
                     'CATEGORY': _description,
                     'IMAGE': _image
                   });
+                  Navigator.pushNamed(context, ManageProductScreen.id);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(

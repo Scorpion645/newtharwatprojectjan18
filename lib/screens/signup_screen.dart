@@ -54,6 +54,7 @@ class SignUpScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              myobscured: true,
               myIcon: Icons.lock,
               myHint: 'Enter your Password',
               onClick: (value) {

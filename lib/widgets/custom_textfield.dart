@@ -5,8 +5,9 @@ import '../constants/constants.dart';
 class CustomTextField extends StatelessWidget {
   final String? myHint;
   final IconData? myIcon;
+ bool myobscured = false;
   void Function(String?)? onClick;
-  CustomTextField({Key? key, this.myHint, this.myIcon, required this.onClick}) : super(key: key);
+  CustomTextField({Key? key, this.myHint, this.myIcon,this.myobscured = false,required this.onClick}) : super(key: key);
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   String _errorMessage(String) {
@@ -17,6 +18,16 @@ class CustomTextField extends StatelessWidget {
         return 'Please enter your Email';
       case 'Enter your Password':
         return 'Please enter your Password';
+        case 'Add product name':
+        return 'Please enter product name';
+         case 'Add product price':
+        return 'Please enter product price';
+         case 'Add product category':
+        return 'Please enter product category';
+         case 'Add product description':
+        return 'Please enter product description';
+         case 'Add product image':
+        return 'Please enter product image';
     }
     return '';
   }
@@ -26,6 +37,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: TextFormField(
+        obscureText: myobscured,
         onSaved: onClick,
         validator: (value) {
           if (value!.isEmpty) {

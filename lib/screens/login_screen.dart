@@ -49,6 +49,7 @@ class LoginScreen extends StatelessWidget {
             ),
             CustomTextField(
               myIcon: Icons.lock,
+              myobscured: true,
               myHint: 'Enter your Password',
               onClick: (value) {
                 _password = value!;
@@ -85,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                     _password == _adminPassword
                         ? Navigator.pushNamed(context, MainAdminScreen.id)
                         : Navigator.pushNamed(context, HomeScreen.id);
-                        Provider.of<ModalHud>(context, listen: false)
+                    Provider.of<ModalHud>(context, listen: false)
                         .ChangeIsLoading(false);
                   } on FirebaseException catch (e) {
                     Provider.of<ModalHud>(context, listen: false)

@@ -6,7 +6,9 @@ import 'provider/admin_mode.dart';
 import 'provider/modal_hud.dart';
 import 'screens/Home_screen.dart';
 import 'screens/admin screens/add_product_screen.dart';
+import 'screens/admin screens/edit_product_screen.dart';
 import 'screens/admin screens/main_admin_screen.dart';
+import 'screens/admin screens/manage_products_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
@@ -34,13 +36,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddProductScreen.id,
+      initialRoute: ManageProductScreen.id,
       routes: {
         SignUpScreen.id: (context) => SignUpScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainAdminScreen.id: (context) => MainAdminScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         AddProductScreen.id: (context) => AddProductScreen(),
+        EditProductScreen.id: (context) => EditProductScreen(),
+        ManageProductScreen.id: (context) => ManageProductScreen(),
       },
     );
   }

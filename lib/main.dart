@@ -10,6 +10,7 @@ import 'screens/admin screens/edit_product_screen.dart';
 import 'screens/admin screens/main_admin_screen.dart';
 import 'screens/admin screens/manage_products_screen.dart';
 import 'screens/login_screen.dart';
+import 'screens/product_info_screen.dart';
 import 'screens/signup_screen.dart';
 
 void main() async {
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         AddProductScreen.id: (context) => AddProductScreen(),
         EditProductScreen.id: (context) => EditProductScreen(),
         ManageProductScreen.id: (context) => ManageProductScreen(),
+       ProductInfoScreen.id: (context) =>ProductInfoScreen(),
       },
     );
   }

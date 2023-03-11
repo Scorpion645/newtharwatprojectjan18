@@ -7,4 +7,9 @@ class CartItem extends ChangeNotifier {
     products.addEntries([MapEntry (product, count)]);
     notifyListeners();
   }
+
+  removeProduct(dynamic product) {
+    products.remove(product);
+    notifyListeners();
+  }
 }

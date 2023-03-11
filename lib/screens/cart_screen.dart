@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constants/constants.dart';
 import '../provider/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
@@ -9,18 +10,122 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List products = Provider.of<CartItem>(context).products;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    Map products = Provider.of<CartItem>(context).products;
     return Scaffold(
-      body: ListView.builder(
-          itemCount: products.length,
-          itemBuilder: ((context, index) {
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        title: Text(
+          'My Cart',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if (products.isNotEmpty) {
             return Column(
               children: [
-                Text(products[index]['NAME'].toString()),
-                Text(products[index]['PRICE'].toString()),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: ((context, index) {
+                        return Container(
+                          height: screenHeight * 0.15,
+                          color: kSecondaryColor,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 40,
+                                      backgroundImage: AssetImage(products.keys
+                                          .elementAt(index)['IMAGE']),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                            products.keys
+                                                .elementAt(index)['NAME'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16)),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                            '\$ ${products.keys.elementAt(index)['PRICE']}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('Count: '),
+                                        Text(
+                                            products.values
+                                                .elementAt(index)
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16))
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      })),
+                ),
+                TextButton(
+                    style: ButtonStyle(
+                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16),
+                                topRight: Radius.circular(16)))),
+                        backgroundColor: MaterialStatePropertyAll(kMainColor),
+                        minimumSize:
+                            MaterialStatePropertyAll(Size(screenWidth, 60))),
+                    onPressed: () {},
+                    child: Text('place order'.toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.black)))
               ],
             );
-          })),
+          } else {
+            return Center(
+                child: Text('Cart is Empty ...'.toUpperCase(),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)));
+          }
+        },
+      ),
     );
   }
 }

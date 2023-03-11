@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CartItem extends ChangeNotifier {
-  List products = [];
+  Map<dynamic, int> products = {};
 
-  addProduct(dynamic product) {
-    products.add(product);
+  addProduct(dynamic product, int count) {
+    products.addEntries([MapEntry (product, count)]);
     notifyListeners();
   }
 }

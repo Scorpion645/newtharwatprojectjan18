@@ -33,21 +33,24 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(onPressed: (){
-                Navigator.pop(context);
-              }, icon: Icon(
-                Icons.arrow_back_ios,
-                size: 26,
-              ),),
-              
-              IconButton(onPressed: (){
-                Navigator.pushNamed(context, CartScreen.id);
-              }, icon: Icon(
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 26,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.id);
+                },
+                icon: Icon(
                   Icons.shopping_cart,
                   size: 26,
                 ),
               )
-              
             ],
           ),
         ),
@@ -86,7 +89,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                               fontSize: 20,
                               color: Colors.black)),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -149,14 +152,19 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                       backgroundColor: MaterialStatePropertyAll(Colors.amber)),
                   onPressed: () {
                     Provider.of<CartItem>(context, listen: false)
-                        .addProduct(product);
-                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                   content: Text(
-                   'Product added successfully!!',
-                   style:
-                   TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                   textAlign: TextAlign.center,
-                   )));
+                        .addProduct(product,_quantity);
+                    // Provider.of<CartItem>(context, listen: false)
+                    //     .products[product] = _quantity as Map<dynamic, int>;
+                    print(
+                        Provider.of<CartItem>(context, listen: false).products);
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      'Product added successfully!!',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    )));
                   },
                   child: Text('Add to cart'.toUpperCase(),
                       style: TextStyle(

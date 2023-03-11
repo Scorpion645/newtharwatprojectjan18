@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 import '../widgets/product_view.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home screen';
@@ -74,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
               productView('shoes'),
             ]),
             bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _bottomBarIndex,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _bottomBarIndex,
                 selectedItemColor: kMainColor,
                 unselectedItemColor: kUnActiveColor,
                 onTap: (value) {
@@ -84,12 +85,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 items: [
-                  BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Test'),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person), label: 'Test'),
-                      BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                       icon: Icon(Icons.person), label: 'Test'),
-                      BottomNavigationBarItem(
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person), label: 'Test'),
+                  BottomNavigationBarItem(
                       icon: Icon(Icons.person), label: 'Test'),
                 ]),
           ),
@@ -106,10 +108,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text('DISCOVER',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22)),
-                    Icon(
-                      Icons.shopping_cart,
-                      size: 26,
-                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, CartScreen.id);
+                      },
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        size: 26,
+                      ),
+                    )
                   ],
                 ),
               )),

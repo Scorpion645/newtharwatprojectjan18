@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
+import '../provider/cart_item.dart';
+import 'cart_screen.dart';
 
 class ProductInfoScreen extends StatefulWidget {
   static String id = 'Product information';
@@ -12,7 +15,7 @@ class ProductInfoScreen extends StatefulWidget {
 }
 
 class _ProductInfoScreenState extends State<ProductInfoScreen> {
-  int _quantity = 0;
+  int _quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +33,21 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
+              IconButton(onPressed: (){
+                Navigator.pop(context);
+              }, icon: Icon(
                 Icons.arrow_back_ios,
                 size: 26,
-              ),
-              Icon(
-                Icons.shopping_cart,
-                size: 26,
-              ),
+              ),),
+              
+              IconButton(onPressed: (){
+                Navigator.pushNamed(context, CartScreen.id);
+              }, icon: Icon(
+                  Icons.shopping_cart,
+                  size: 26,
+                ),
+              )
+              
             ],
           ),
         ),
@@ -86,29 +96,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                                 color: kMainColor,
                                 child: GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      _quantity++;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    height: 28,
-                                    width: 28,
-                                    child: Icon(Icons.add),
-                                  ),
-                                )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Text(_quantity.toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 40)),
-                          ),
-                          ClipOval(
-                            child: Material(
-                                color: kMainColor,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if (_quantity > 0) {
+                                    if (_quantity > 1) {
                                       setState(() {
                                         _quantity--;
                                       });
@@ -118,6 +106,28 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                                     height: 28,
                                     width: 28,
                                     child: Icon(Icons.remove),
+                                  ),
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(_quantity.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 40)),
+                          ),
+                          ClipOval(
+                            child: Material(
+                                color: kMainColor,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _quantity++;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                    height: 28,
+                                    width: 28,
+                                    child: Icon(Icons.add),
                                   ),
                                 )),
                           ),
@@ -137,7 +147,17 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12)))),
                       backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<CartItem>(context, listen: false)
+                        .addProduct(product);
+                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                   content: Text(
+                   'Product added successfully!!',
+                   style:
+                   TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                   textAlign: TextAlign.center,
+                   )));
+                  },
                   child: Text('Add to cart'.toUpperCase(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/admin_mode.dart';
+import 'provider/cart_item.dart';
 import 'provider/modal_hud.dart';
 import 'screens/Home_screen.dart';
 import 'screens/admin screens/add_product_screen.dart';
 import 'screens/admin screens/edit_product_screen.dart';
 import 'screens/admin screens/main_admin_screen.dart';
 import 'screens/admin screens/manage_products_screen.dart';
+import 'screens/cart_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/product_info_screen.dart';
 import 'screens/signup_screen.dart';
@@ -20,6 +22,11 @@ void main() async {
     ChangeNotifierProvider(
       create: (context) {
         return ModalHud();
+      },
+    ),
+    ChangeNotifierProvider(
+      create: (context) {
+        return CartItem();
       },
     ),
     ChangeNotifierProvider(
@@ -46,7 +53,8 @@ class MyApp extends StatelessWidget {
         AddProductScreen.id: (context) => AddProductScreen(),
         EditProductScreen.id: (context) => EditProductScreen(),
         ManageProductScreen.id: (context) => ManageProductScreen(),
-       ProductInfoScreen.id: (context) =>ProductInfoScreen(),
+        ProductInfoScreen.id: (context) => ProductInfoScreen(),
+        CartScreen.id: (context) => CartScreen(),
       },
     );
   }

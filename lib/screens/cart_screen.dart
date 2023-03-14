@@ -246,7 +246,7 @@ class _CartScreenState extends State<CartScreen> {
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           )),
-                      Text(Provider.of<CartItem>(context).totalCoast.toString(),
+                      Text('\$ ${Provider.of<CartItem>(context).totalCoast.toString()}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 34,
@@ -254,8 +254,6 @@ class _CartScreenState extends State<CartScreen> {
                     ],
                   ),
                 ),
-                // Spacer(),
-                // Spacer(),
                 TextButton(
                     style: ButtonStyle(
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
@@ -269,7 +267,6 @@ class _CartScreenState extends State<CartScreen> {
                       for (var product in products.entries) {
                         price = 0;
                         count = 0;
-                        // totalPrice = 0;
                         setState(() {
                           price = int.parse(product.key['PRICE']);
                           count = product.value;
@@ -277,7 +274,6 @@ class _CartScreenState extends State<CartScreen> {
                         });
                       }
                       showCustomDialog(products, CartItemProvider.totalCoast);
-                      // totalPrice = 0;
                     },
                     child: Text('place order'.toUpperCase(),
                         style: TextStyle(

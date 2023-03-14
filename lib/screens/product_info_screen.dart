@@ -5,6 +5,8 @@ import '../constants/constants.dart';
 import '../provider/cart_item.dart';
 import 'cart_screen.dart';
 
+int last = 0;
+
 class ProductInfoScreen extends StatefulWidget {
   static String id = 'Product information';
 
@@ -16,10 +18,16 @@ class ProductInfoScreen extends StatefulWidget {
 
 class _ProductInfoScreenState extends State<ProductInfoScreen> {
   int _quantity = 1;
+  int totalCost = 0;
 
   @override
   Widget build(BuildContext context) {
     dynamic product = ModalRoute.of(context)?.settings.arguments;
+        final CartItemProvider = Provider.of<CartItem>(context, listen: false);
+    ;
+
+    int totalItemCost = 0;
+
     return Scaffold(
         body: Stack(
       children: [
@@ -44,7 +52,20 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, CartScreen.id);
+                  totalItemCost = 0;
+                  CartItemProvider.totalCoast = 0;
+                  for (var entry
+                      in CartItemProvider
+                          .products
+                          .entries) {
+                    CartItemProvider.totalCoast +=
+                        (entry.value) *
+                            (int.parse(entry.key['PRICE'].toString()));
+                    CartItemProvider.totalCoast +=
+                        totalItemCost;
+                  }
+                  Navigator.pushNamed(context, CartScreen.id,
+                      arguments: totalCost);
                 },
                 icon: Icon(
                   Icons.shopping_cart,
@@ -125,6 +146,9 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                                   onTap: () {
                                     setState(() {
                                       _quantity++;
+                                      Provider.of<CartItem>(context,
+                                              listen: false)
+                                          .products[product] = _quantity;
                                     });
                                   },
                                   child: SizedBox(
@@ -151,13 +175,16 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                               topLeft: Radius.circular(12)))),
                       backgroundColor: MaterialStatePropertyAll(Colors.amber)),
                   onPressed: () {
-                    Provider.of<CartItem>(context, listen: false)
-                        .addProduct(product,_quantity);
-                    // Provider.of<CartItem>(context, listen: false)
-                    //     .products[product] = _quantity as Map<dynamic, int>;
-                    print(
-                        Provider.of<CartItem>(context, listen: false).products);
-
+                    var selectedItems =
+                        CartItemProvider.products;
+                    CartItemProvider
+                        .addProduct(product, _quantity);
+                    selectedItems.forEach((key, value) {
+                      setState(() {
+                        totalCost =
+                            totalCost + (int.parse(key['PRICE']) * value);
+                      });
+                    });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
                       'Product added successfully!!',

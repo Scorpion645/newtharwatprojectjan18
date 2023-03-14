@@ -13,6 +13,7 @@ class CartItem extends ChangeNotifier {
   }
 
   removeProduct(dynamic product, int count) {
+    products.remove(product);
     totalPrice -= int.parse(product['PRICE']) * count.round();
     notifyListeners();
   }

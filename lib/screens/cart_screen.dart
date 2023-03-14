@@ -100,6 +100,31 @@ class _CartScreenState extends State<CartScreen> {
                                                                 .elementAt(
                                                                     index),
                                                             prodCount);
+                                                            Provider.of<CartItem>(
+                                                            context,
+                                                            listen: false)
+                                                        .totalCoast = 0;
+
+                                                    for (var entry in Provider
+                                                            .of<CartItem>(
+                                                                context,
+                                                                listen: false)
+                                                        .products
+                                                        .entries) {
+                                                      Provider.of<CartItem>(
+                                                              context,
+                                                              listen: false)
+                                                          .totalCoast += (entry
+                                                              .value) *
+                                                          (int.parse(entry
+                                                              .key['PRICE']
+                                                              .toString()));
+                                                      Provider.of<CartItem>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .totalCoast +=
+                                                          totalItemCost;
+                                                    }
                                                   });
                                                 }
                                               },
@@ -171,11 +196,32 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      Provider.of<CartItem>(context,
-                                              listen: false)
-                                          .removeProduct(
-                                              products.keys.elementAt(index),
-                                              prodCount);
+                                      setState(() {
+                                        Provider.of<CartItem>(context,
+                                                listen: false)
+                                            .removeProduct(
+                                                products.keys.elementAt(index),
+                                                prodCount);
+                                                Provider.of<CartItem>(context,
+                                                listen: false)
+                                            .totalCoast = 0;
+
+                                        for (var entry in Provider.of<CartItem>(
+                                                context,
+                                                listen: false)
+                                            .products
+                                            .entries) {
+                                          Provider.of<CartItem>(context,
+                                                      listen: false)
+                                                  .totalCoast +=
+                                              (entry.value) *
+                                                  (int.parse(entry.key['PRICE']
+                                                      .toString()));
+                                          Provider.of<CartItem>(context,
+                                                  listen: false)
+                                              .totalCoast += totalItemCost;
+                                        }
+                                      });
                                     },
                                     icon: Icon(
                                       Icons.delete,

@@ -10,44 +10,51 @@ import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String id = 'sign up screen';
-  const SignUpScreen({Key? key}) : super(key: key);
+  SignUpScreen({Key? key}) : super(key: key);
+  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kMainColor,
-      body: ListView(
-        children: [
-          heightSizedbox(60),
-          Logo(),
-          heightSizedbox(20),
-          CustomTextField(
-            myIcon: Icons.person,
-            myHint: 'Enter your Name',
-          ),
-          heightSizedbox(20),
-          CustomTextField(
-            myIcon: Icons.email,
-            myHint: 'Enter your Email',
-          ),
-          heightSizedbox(20),
-          CustomTextField(
-            myIcon: Icons.lock,
-            myHint: 'Enter your Password',
-            myObscured: true,
-          ),
-          heightSizedbox(20),
-          CustomButton(
-            butTitle: 'Sign up',
-          ),
-          CustomRow(
-            firstText: 'Already have an account?',
-            secondText: 'Login',
-            onclick: () {
-              Navigator.pushNamed(context, LoginScreen.id);
-            },
-          ),
-        ],
+      body: Form(
+        key: _globalKey,
+        child: ListView(
+          children: [
+            heightSizedbox(60),
+            Logo(),
+            heightSizedbox(20),
+            CustomTextField(
+              myIcon: Icons.person,
+              myHint: 'Enter your Name',
+            ),
+            heightSizedbox(20),
+            CustomTextField(
+              myIcon: Icons.email,
+              myHint: 'Enter your Email',
+            ),
+            heightSizedbox(20),
+            CustomTextField(
+              myIcon: Icons.lock,
+              myHint: 'Enter your Password',
+              myObscured: true,
+            ),
+            heightSizedbox(20),
+            CustomButton(
+              butTitle: 'Sign up',
+              onClick: () {
+                _globalKey.currentState!.validate();
+              },
+            ),
+            CustomRow(
+              firstText: 'Already have an account?',
+              secondText: 'Login',
+              onclick: () {
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

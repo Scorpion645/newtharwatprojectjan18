@@ -73,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                         e.message!,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 17,
                         ),
                         textAlign: TextAlign.center,
                       )));

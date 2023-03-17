@@ -1,17 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
+import '../provider/Admin.dart';
 import '../widgets/custom_Button.dart';
 import '../widgets/custom_Row.dart';
 import '../widgets/custom_TextField.dart';
 import '../widgets/logo.dart';
 import '../widgets/sizedbox.dart';
+import 'Home_screen.dart';
+import 'admin_screens/main_admin_screen.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static String id = 'log in screen';
   late String _email, _password;
+  final String adminPassword = 'Admin1234';
   LoginScreen({Key? key}) : super(key: key);
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
@@ -47,26 +52,34 @@ class LoginScreen extends StatelessWidget {
                 butTitle: 'Log in',
                 onClick: () async {
                   _globalKey.currentState!.save();
-
-                  print(_email);
-                  print(_password);
                   if (_globalKey.currentState!.validate()) {
-                    print('Hello');
-
-                    print(_email);
                     try {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: _email, password: _password);
-
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                        'Admin logged in successfully',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      )));
+                      if (_password == adminPassword &&
+                          Provider.of<AdminUser>(context, listen: false)
+                              .isAdmin) {
+                        Navigator.pushNamed(context, MainAdminScreen.id);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          'Successful login as ADMIN',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                          textAlign: TextAlign.center,
+                        )));
+                      } else if (_password != adminPassword ||
+                          Provider.of<AdminUser>(context, listen: false).isAdmin == false) {
+                        Navigator.pushNamed(context, HomeScreen.id);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          'Successful Login as USER',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        )));
+                      }
                     } on FirebaseException catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
@@ -87,6 +100,42 @@ class LoginScreen extends StatelessWidget {
                 Navigator.pushNamed(context, SignUpScreen.id);
               },
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      Provider.of<AdminUser>(context, listen: false)
+                          .ChangeAdmin(true);
+                    },
+                    child: Text('ADMIN',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Provider.of<AdminUser>(context).isAdmin
+                                ? 20
+                                : 14,
+                            color: Provider.of<AdminUser>(context).isAdmin
+                                ? Colors.white
+                                : Colors.grey[500]))),
+                SizedBox(
+                  width: 90,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Provider.of<AdminUser>(context, listen: false)
+                          .ChangeAdmin(false);
+                    },
+                    child: Text('USER',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Provider.of<AdminUser>(context).isAdmin
+                                ? 14
+                                : 20,
+                            color: Provider.of<AdminUser>(context).isAdmin
+                                ? Colors.grey[500]
+                                : Colors.white))),
+              ],
+            )
           ],
         ),
       ),

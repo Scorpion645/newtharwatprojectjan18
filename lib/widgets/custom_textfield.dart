@@ -6,10 +6,11 @@ class CustomTextField extends StatelessWidget {
   String? myHint;
   IconData? myIcon;
   bool myObscured;
-  CustomTextField({this.myHint, this.myIcon, this.myObscured = false});
+  void Function(String?)? onClick;
+  CustomTextField({this.myHint, this.myIcon, this.myObscured = false, this.onClick});
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
-  String _errorMessage(myHint) {
+  String _errorMessage(String) {
     switch (myHint) {
       case 'Enter your Name':
         return 'Please enter your Name';
@@ -19,18 +20,21 @@ class CustomTextField extends StatelessWidget {
         return 'Please enter your Password';
     }
     return '';
+    
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: TextFormField(
+          
           validator: (value) {
             if (value!.isEmpty) {
               return _errorMessage(myHint);
             }
-            return '';
           },
           obscureText: myObscured,
           decoration: InputDecoration(
@@ -57,6 +61,7 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(width: 3, color: Colors.white)),
           ),
+          onSaved: onClick,
         ));
   }
 }

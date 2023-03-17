@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   String butTitle;
-  Function()? onClick;
+  void Function()? onClick;
   CustomButton({required this.butTitle, this.onClick,Key? key}) : super(key: key);
 
   @override

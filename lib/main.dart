@@ -3,19 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/Admin.dart';
+import 'provider/modal_progres_hud.dart';
 import 'screens/Home_screen.dart';
 import 'screens/admin_screens/main_admin_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
 void main() async {
-WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
-runApp(ChangeNotifierProvider(
-create: (BuildContext context) {
-return AdminUser();
-},
-child: MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) {
+      return AdminUser();
+    }),
+    ChangeNotifierProvider(create: (context) {
+      return ModalProgressHud();
+    })
+  ], 
+  child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,8 +32,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: LoginScreen.id,
       routes: {
-        SignUpScreen.id:(context) =>  SignUpScreen(),
-        LoginScreen.id: (context) =>  LoginScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
         MainAdminScreen.id: (context) => MainAdminScreen(),
         HomeScreen.id: (context) => HomeScreen(),
       },

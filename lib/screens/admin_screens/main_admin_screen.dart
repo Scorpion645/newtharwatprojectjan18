@@ -4,6 +4,7 @@ import '../../constants/constants.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/sizedbox.dart';
 import 'add_product_screen.dart';
+import 'manage_product_screen.dart';
 
 class MainAdminScreen extends StatelessWidget {
   static String id = 'main admin screen';
@@ -22,7 +23,12 @@ class MainAdminScreen extends StatelessWidget {
                 Navigator.pushNamed(context, AddProductScreen.id);
               }),
           heightSizedbox(40),
-          CustomButton(butTitle: 'Edit Product'),
+          CustomButton(
+            butTitle: 'Manage Product',
+            onClick: () {
+              Navigator.pushNamed(context, ManageProductScreen.id);
+            },
+          ),
           heightSizedbox(40),
           CustomButton(butTitle: 'Orders Review'),
           heightSizedbox(40),

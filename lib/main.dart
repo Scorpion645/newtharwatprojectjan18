@@ -6,7 +6,9 @@ import 'provider/Admin.dart';
 import 'provider/modal_progres_hud.dart';
 import 'screens/Home_screen.dart';
 import 'screens/admin_screens/add_product_screen.dart';
+import 'screens/admin_screens/edit_product_screen.dart';
 import 'screens/admin_screens/main_admin_screen.dart';
+import 'screens/admin_screens/manage_product_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 
@@ -20,8 +22,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) {
       return ModalProgressHud();
     })
-  ], 
-  child: MyApp()));
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,13 +32,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: AddProductScreen.id,
+      initialRoute: ManageProductScreen.id,
       routes: {
         SignUpScreen.id: (context) => SignUpScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         MainAdminScreen.id: (context) => MainAdminScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         AddProductScreen.id: (context) => AddProductScreen(),
+        EditProductScreen.id: (context) => EditProductScreen(),
+        ManageProductScreen.id: (context) => ManageProductScreen(),
       },
     );
   }

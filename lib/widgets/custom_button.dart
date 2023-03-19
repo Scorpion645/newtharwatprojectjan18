@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 120),
+      padding: const EdgeInsets.symmetric(horizontal: 100),
       child: TextButton(
           style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.black),

@@ -4,10 +4,11 @@ import '../constants/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   String? myHint;
+  String? myInit;
   IconData? myIcon;
   bool myObscured;
   void Function(String?)? onClick;
-  CustomTextField({this.myHint, this.myIcon, this.myObscured = false, this.onClick});
+  CustomTextField({this.myHint, this.myIcon, this.myObscured = false, this.onClick, this.myInit});
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   String _errorMessage(String) {
@@ -30,7 +31,7 @@ class CustomTextField extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: TextFormField(
-          
+          initialValue: myInit,
           validator: (value) {
             if (value!.isEmpty) {
               return _errorMessage(myHint);

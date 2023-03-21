@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/admin_screens/edit_product_screen.dart';
+import '../screens/product_details_screen.dart';
 
 Widget productView(String productCategory) {
   return StreamBuilder(
@@ -23,34 +23,8 @@ Widget productView(String productCategory) {
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTapUp: (details) {
-              double dx = details.globalPosition.dx;
-              double dy = details.globalPosition.dy;
-              double dx2 = MediaQuery.of(context).size.width - dx;
-              double dy2 = MediaQuery.of(context).size.height - dy;
-              showMenu(
-                  context: context,
-                  position: RelativeRect.fromLTRB(dx, dy, dx2, dy2),
-                  items: [
-                    PopupMenuItem(
-                        child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, EditProductScreen.id,
-                                  arguments: snapshot.data.docs[index]);
-                            },
-                            child: Text('EDIT'))),
-                    PopupMenuItem(
-                        child: TextButton(
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await FirebaseFirestore.instance
-                                  .collection('New Collection')
-                                  .doc(snapshot.data.docs[index].id)
-                                  .delete();
-                            },
-                            child: Text('Delete'))),
-                  ]);
+            onTap: () {
+              Navigator.pushNamed(context, ProductDetailsScreen.id, arguments: products[index]);
             },
             child: Stack(
               alignment: Alignment.center,

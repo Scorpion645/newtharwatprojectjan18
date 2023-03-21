@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 import '../widgets/product_view.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'Home screen';
@@ -9,8 +10,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [DefaultTabController(
+    return Stack(children: [
+      DefaultTabController(
         length: 4,
         child: Scaffold(
             appBar: AppBar(
@@ -49,22 +50,24 @@ class HomeScreen extends StatelessWidget {
       Material(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*0.15,
+          height: MediaQuery.of(context).size.height * 0.15,
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(right: 30, left: 30, top: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Text('DISCOVER', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-              Icon(Icons.shopping_cart)
-            ],),
+                Text('DISCOVER',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                IconButton(onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.id);
+                }, icon: Icon(Icons.shopping_cart)),
+              ],
+            ),
           ),
         ),
       )
-      ]
-    );
+    ]);
   }
-
- 
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../constants/constants.dart';
 import '../provider/cart_products.dart';
 import '../widgets/sizedbox.dart';
+import 'cart_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static String id = 'product details screen';
@@ -52,7 +53,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     width: 260,
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, CartScreen.id,
+                            arguments: Provider.of<CartProducts>(context,
+                                    listen: false)
+                                .calculateCost(context));
+                        print(Provider.of<CartProducts>(context, listen: false)
+                            .totalCost
+                            .toString());
+                      },
                       icon: Icon(Icons.shopping_cart_rounded)),
                 ],
               ),
@@ -148,7 +157,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -167,14 +176,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               topLeft: Radius.circular(18)))),
                       backgroundColor: MaterialStatePropertyAll(kMainColor)),
                   onPressed: () {
-                    // Provider.of<CartProducts>(context, listen: false)
-                    //     .cartProducts[product] = _quantity as Map<int, dynamic>;
                     Provider.of<CartProducts>(context, listen: false)
                         .cartProducts
-                        ..addEntries([MapEntry(product, _quantity)]);
+                      ..addEntries([MapEntry(product, _quantity)]);
                     print(Provider.of<CartProducts>(context, listen: false)
                         .cartProducts);
-                    // print(Provider.of<CartProducts>(context, listen: false).cartProducts);
                   },
                   child: Text('Add to Cart'.toUpperCase(),
                       style: TextStyle(
